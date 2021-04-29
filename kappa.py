@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-
 import numpy as np
 
 def kappa(R, max_count=None, check_bin=True, verbosity=0):
@@ -132,4 +130,3 @@ def rel_dist_bound(R1, R2, check_bin=True, verbosity=0):
                 R2.shape[1] - R2_disagrs.shape[1], k21))
 
     return max(R1.shape[1], R2.shape[1]) - min(R1.shape[1] - R1_disagrs.shape[1] + k12, R2.shape[1] - R2_disagrs.shape[1] + k21)
-
