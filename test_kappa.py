@@ -59,5 +59,34 @@ class TestKappa(unittest.TestCase):
         self.assertEqual(rel_dist_bound(R1, R2),2)
         return
 
+    def test_read_dict_of_lists(self):
+        Rdict1 = {
+        'a': [False, True, True, True, False, False, False, False, False, False],
+        'b': [0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+        'c': [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+        'd': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1]}
+        with self.assertRaises((AssertionError, TypeError)):
+            rel_from_dict(Rdict1)
+        return
+
+    def test_read_dict_of_dicts(self):
+        Rdict2 = {
+        'a': {1:False, 2:True, 3:True, 4:True, 5:False, 6:False, 7:False, 8:False, 9:False, 10:False},
+        'b': {1:0, 2:0, 3:1, 4:1, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0},
+        'c': {1:0, 2:0, 3:0, 4:0, 5:1, 6:1, 7:0, 8:0, 9:0, 10:0},
+        'd': {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:1, 8:1, 9:1, 10:1}}
+        self.assertFalse(np.any(rel_from_dict(Rdict2) - self.R))
+        return
+
+    def test_read_sparse_dict(self):
+        Rdict3 = {
+        'a': {1:False, 2:True, 3:True, 4:True, 5:False, 6:False, 7:False, 8:False, 9:False, 10:False},
+        'b': {3:1, 4:1},
+        'c': {5:1, 6:1},
+        'd': {7:1, 8:1, 9:1, 10:1}}
+        self.assertFalse(np.any(rel_from_dict(Rdict3) - self.R))
+        return
+
+
 if __name__ == '__main__':
     unittest.main()
