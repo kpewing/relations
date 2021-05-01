@@ -4,7 +4,7 @@ import numpy as np
 
 
 def kappa(R, max_count=None, check_bin=True, verbosity=0):
-    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'' (2021-05-03)."""
+    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'' (2021-05-03), arXiv:NNNN.NNN [math.GT]."""
     assert (not check_bin) or (np.max(R) <= 1), TypeError("Input is not a binary matrix: {0}".format(R))
     assert (not max_count) or (isinstance(max_count, int) and max_count >= 0), TypeError("Optional max_count is not a natural number: {0}".format(max_count))
     assert (not verbosity) or (isinstance(verbosity, int) and verbosity >= 0), TypeError("Verbosity is not a natural number: {0}".format(verbosity))
@@ -64,7 +64,10 @@ def kappa(R, max_count=None, check_bin=True, verbosity=0):
 
     # now calculate the kappa: O(rows)
     cap = max_count or R.shape[1]
-    m = np.argmax(blocksums[blocksums <= cap])
+    if np.any(blocksums <= cap):
+        m = np.argmax(blocksums[blocksums <= cap])
+    else:
+        m = 0
     if verbosity > 0:
         print("blockcounts: {0}".format(blockcounts))
         print("blocksums: {0}".format(blocksums))
