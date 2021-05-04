@@ -1,3 +1,7 @@
+<script type="text/javascript" charset="utf-8" 
+src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,
+https://vincenttam.github.io/javascripts/MathJaxLocal.js"></script>
+
 # relations
 Python code for topological analysis of (mathematical) relations.
 
@@ -7,7 +11,7 @@ Python code for topological analysis of (mathematical) relations.
 
 ## kappa.py
 
-Topological distance between two mathematical relations, represented by binary matrices showing which objects (columns) exhibit which features (rows), can be defined in terms of the number of changes required to transform one matrix into the other and vice versa, somewhat like the [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) for strings (see Robinson, [link to come](). Calculating the exact distance requires considering all possible transformations, which can be exponential in time: $\mathcal{O}(n^{m})$ for relations of lengths *n* and *m*. An upper bound on the distance can, however, be calculated in $\mathcal{O}(n\times m)$ time using the *kappa* value for the disagreeing columns in each of two relations when compared to the other (see [Bounds for the Distance Between Relations]()). 
+Topological distance between two mathematical relations, represented by binary matrices showing which objects (columns) exhibit which features (rows), can be defined in terms of the number of changes required to transform one matrix into the other and vice versa, somewhat like the [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) for strings (see Robinson, [link to come]()). Calculating the exact distance requires considering all possible transformations, which can be exponential in time: $\mathcal{O}(n^{m})$ for relations of lengths *n* and *m*. An upper bound on the distance can, however, be calculated in $\mathcal{O}(n\times m)$ time using the *kappa* value for the disagreeing columns in each of two relations when compared to the other (see [Bounds for the Distance Between Relations]()). 
 
 The code in `kappa.py` exposes the following functions:
 
