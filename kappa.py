@@ -4,7 +4,7 @@ import numpy as np
 
 
 def kappa(R, max_count=None, check_bin=True, verbosity=0):
-    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'' (2021-05-03), arXiv:NNNN.NNN [math.GT]."""
+    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'', arXiv:NNNN.NNN."""
     assert (not check_bin) or (np.max(R) <= 1), TypeError("Input is not a binary matrix: {0}".format(R))
     assert (not max_count) or (isinstance(max_count, int) and max_count >= 0), TypeError("Optional max_count is not a natural number: {0}".format(max_count))
     assert (not verbosity) or (isinstance(verbosity, int) and verbosity >= 0), TypeError("Verbosity is not a natural number: {0}".format(verbosity))
@@ -163,9 +163,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="""Calculates `kappa' of one relation or the `relation distance' between
         two relations according to the `kappa' algorithm in Kenneth P. Ewing, ``Bounds for the
-        Distance Between Relations'' (2021-05-03), arXiv:NNNN.NNN [math.GT].
-
-        For sparse arrays, ensure all rows and all cols appear at least once and set defaults.
+        Distance Between Relations'' arXiv:NNNN.NNN. For sparse arrays, ensure
+        all rows and all cols appear at least once and set defaults.
         """)
     group = parser.add_mutually_exclusive_group()
     parser.add_argument('rel1', nargs=1, default=None, help='Filepath for first relation (JSON).')
@@ -173,9 +172,9 @@ if __name__ == "__main__":
     group.add_argument('rel2', nargs='?', default=None, help='Filepath for second relation (JSON).')
     group.add_argument('--def2', type=int, default=0, help='Default for sparse second relation.')
     group.add_argument('-m', '--max_count', type=int, default=0, help='Number of columns for kappa to map.')
-    parser.add_argument('-v', '--verbosity', type=int, choices=range(3), default=0)
     parser.add_argument('-c', '--check_bin', action='store_true', help='Check that relations are binary matrices.')
     parser.add_argument('-d', '--display', action='store_true', help='Display relation matrices before printing result.')
+    parser.add_argument('-v', '--verbosity', type=int, choices=range(3), default=0, help='Print up to 3 levels of intermediate results of calculations.')
     args = parser.parse_args()
 
     if args.rel1:
