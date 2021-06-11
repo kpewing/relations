@@ -4,10 +4,15 @@ import numpy as np
 
 
 def kappa(R, max_count=None, check_bin=True, verbosity=0):
-    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'', arXiv:NNNN.NNN."""
-    assert (not check_bin) or (np.max(R) <= 1), TypeError("Input is not a binary matrix: {0}".format(R))
+    """Calculate the `kappa' for a binary matrix according to algorithm in Kenneth P. Ewing, ``Bounds for the Distance Between Relations'', arXiv:2105.01690."""
+    assert (not check_bin) or (np.size(R) == 0) or (np.max(R) <= 1), TypeError("Input is not a binary matrix: {0}".format(R))
     assert (not max_count) or (isinstance(max_count, int) and max_count >= 0), TypeError("Optional max_count is not a natural number: {0}".format(max_count))
     assert (not verbosity) or (isinstance(verbosity, int) and verbosity >= 0), TypeError("Verbosity is not a natural number: {0}".format(verbosity))
+
+    # empty relation has kappa = 0
+    #
+    if np.size(R) == 0:
+        return 0
 
     # build maximal x-groups: O(rows * cols); for speed use sets since mutable hashes
     #
@@ -86,7 +91,7 @@ def kappa(R, max_count=None, check_bin=True, verbosity=0):
 def rel_dist_bound(R1, R2, check_bin=True, verbosity=0):
     """Calculate upper bound of Michael Robinson's `relation distance' between two relations using `kappa' algorithm."""
     assert (not check_bin) or np.all([(np.max(R) <= 1) for R in [R1, R2]]), AssertionError("Inputs not binary matrices: {0} {1}".format(R1, R2))
-    assert R1.shape[1] == R2.shape[1], AssertionError("Inputs don't have same number of rows: {0} {1}".format(R1, R2))
+    assert R1.shape[0] == R2.shape[0], AssertionError("Inputs don't have same number of rows: {0} {1}".format(R1, R2))
 
     # calculate disagreeing columns in each direction
     R1_disagrs = rel_diff(R1, R2, check_bin=False)
@@ -112,7 +117,7 @@ def rel_dist_bound(R1, R2, check_bin=True, verbosity=0):
 def rel_diff(R1, R2, check_bin=True):
     """One-for-one remove from relation `R1' any columns found in `R2', both represented as binary matrices"""
     assert (not check_bin) or np.all([(np.max(R) <= 1) for R in [R1, R2]]), AssertionError("Inputs not binary matrices: {0} {1}".format(R1, R2))
-    assert R1.shape[1] == R2.shape[1], AssertionError("Inputs don't have same number of rows: {0} {1}".format(R1, R2))
+    assert R1.shape[0] == R2.shape[0], AssertionError("Inputs don't have same number of rows: {0} {1}".format(R1, R2))
 
     # initialize with no agreeing columns: O(max(cols))
     R1_agrs = []
